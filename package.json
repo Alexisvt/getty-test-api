@@ -10,14 +10,19 @@
     "dev:debug": "nodemon --exec 'node -r ts-node/register --inspect-brk' server/index.ts | pino-pretty",
     "test": "mocha test/**/*.ts --exit",
     "test:debug": "mocha --inspect-brk test/**/*.ts --exit",
-    "tslint": "tslint -c tslint.json -p tsconfig.json"
+    "lint": "tslint -c tslint.json -p tsconfig.json"
   },
   "dependencies": {
+    "@types/dotenv": "^6.1.1",
+    "@types/mongodb": "^3.1.26",
+    "@types/mongoose": "^5.3.27",
     "bluebird": "^3.5.3",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.4",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
+    "mongodb": "^3.2.3",
+    "mongoose": "^5.5.6",
     "pino": "^5.11.1",
     "swagger-express-middleware": "^2.0.1"
   },

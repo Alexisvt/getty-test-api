@@ -1,4 +1,4 @@
-swagger: "2.0"
+swagger: '2.0'
 info:
   version: 1.0.0
   title: petApi
@@ -7,6 +7,8 @@ basePath: /api/v1
 tags:
   - name: Examples
     description: Simple example endpoints
+  - name: PetManagement
+    description: Example endpoint for Pet Management
   - name: Specification
     description: The swagger API specification
 
@@ -14,7 +16,6 @@ consumes:
   - application/json
 produces:
   - application/json
-
 
 definitions:
   ExampleBody:
@@ -26,6 +27,25 @@ definitions:
       name:
         type: string
         example: no_stress
+  PetModel:
+    type: object
+    title: PetModel
+    required:
+      - name
+      - description
+      - age
+    properties:
+      _id:
+        type: string
+      name:
+        type: string
+        example: rufus
+      description:
+        type: string
+        example: big dog
+      age:
+        type: number
+        example: 1
 
 paths:
   /examples:
@@ -45,8 +65,8 @@ paths:
           in: body
           description: an example
           required: true
-          schema: 
-            $ref: "#/definitions/ExampleBody"
+          schema:
+            $ref: '#/definitions/ExampleBody'
       responses:
         200:
           description: Returns all examples
@@ -66,6 +86,38 @@ paths:
           description: Return the example with the specified id
         404:
           description: Example not found
+
+  /pet:
+    post:
+      tags:
+        - PetManagement
+      description: Create a new Pet
+      parameters:
+        - name: PetModel
+          in: body
+          description: a pet object
+          required: true
+          schema:
+            $ref: '#/definitions/PetModel'
+      responses:
+        200:
+          description: Returns all examples
+
+  /pet/{id}:
+    get:
+      tags:
+        - PetManagement
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the pet to retrieve
+          type: string
+      responses:
+        200:
+          description: Return a pet with the specified id
+        404:
+          description: Pet not found
 
   /spec:
     get:

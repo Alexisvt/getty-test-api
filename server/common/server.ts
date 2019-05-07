@@ -2,6 +2,7 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import express, { Application } from 'express';
 import http from 'http';
+import mongoose from 'mongoose';
 import os from 'os';
 import path from 'path';
 
@@ -18,6 +19,14 @@ export default class ExpressServer {
     app.use(bodyParser.urlencoded({ extended: true, limit: process.env.REQUEST_LIMIT || '100kb' }));
     app.use(cookieParser(process.env.SESSION_SECRET));
     app.use(express.static(`${root}/public`));
+    mongoose
+      .connect(
+        'mongodb+srv://gettymadmin:fY8rCxHihNygmjN@cluster0-kwqzn.mongodb.net/test?retryWrites=true'
+      )
+      .then(result => {
+        l.info('connected to the database');
+      })
+      .catch(err => l.error(err));
   }
 
   router(routes: (app: Application) => void): ExpressServer {

@@ -1,5 +1,6 @@
-import ExamplesService from '../../services/examples.service';
 import { Request, Response } from 'express';
+
+import ExamplesService from '../../services/examples.service';
 
 export class Controller {
   all(req: Request, res: Response): void {
