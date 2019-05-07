@@ -20,9 +20,7 @@ export default class ExpressServer {
     app.use(cookieParser(process.env.SESSION_SECRET));
     app.use(express.static(`${root}/public`));
     mongoose
-      .connect(
-        'mongodb+srv://gettymadmin:fY8rCxHihNygmjN@cluster0-kwqzn.mongodb.net/test?retryWrites=true'
-      )
+      .connect(process.env.DB_ROUTE)
       .then(result => {
         l.info('connected to the database');
       })
