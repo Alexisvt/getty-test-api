@@ -1,14 +1,12 @@
-import express from 'express';
-import { Application } from 'express';
-import path from 'path';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import express, { Application } from 'express';
 import http from 'http';
 import os from 'os';
-import cookieParser from 'cookie-parser';
-
-  import installValidator from './swagger';
+import path from 'path';
 
 import l from './logger';
+import installValidator from './swagger';
 
 const app = express();
 
@@ -23,12 +21,16 @@ export default class ExpressServer {
   }
 
   router(routes: (app: Application) => void): ExpressServer {
-    installValidator(app, routes)
+    installValidator(app, routes);
     return this;
   }
 
   listen(p: string | number = process.env.PORT): Application {
-    const welcome = port => () => l.info(`up and running in ${process.env.NODE_ENV || 'development'} @: ${os.hostname() } on port: ${port}}`);
+    const welcome = port => () =>
+      l.info(
+        `up and running in ${process.env.NODE_ENV ||
+          'development'} @: ${os.hostname()} on port: ${port}}`
+      );
     http.createServer(app).listen(p, welcome(p));
     return app;
   }
