@@ -3,7 +3,6 @@ import { Request, Response } from 'express';
 import L from '../../../common/logger';
 import PetManagementService from '../../services/pet-management.service';
 
-
 export class Controller {
   async create(req: Request, res: Response): Promise<void> {
     try {
@@ -14,7 +13,6 @@ export class Controller {
         .location(`/api/v1/pet/${result._id}`)
         .json(result);
     } catch (error) {
-      L.error(`An error has ocurrend while creating the pet ${error}`);
       res.status(500).end();
     }
   }
@@ -22,10 +20,17 @@ export class Controller {
   async byId(req: Request, res: Response): Promise<void> {
     try {
       const result = await PetManagementService.getPetById(req.params.id);
-      res.json(result);
       res.status(200).json(result);
     } catch (error) {
-      err => L.error(err);
+      res.status(404).end();
+    }
+  }
+
+  async delete(req: Request, res: Response): Promise<void> {
+    try {
+      const result = await PetManagementService.deleteById(req.params.id);
+      res.status(200).json(result);
+    } catch (error) {
       res.status(404).end();
     }
   }

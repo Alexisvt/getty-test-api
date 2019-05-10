@@ -29,6 +29,19 @@ export class PetManagementService {
       throw error;
     }
   }
+
+  async deleteById(id: string): Promise<IPetModel> {
+    L.info(`Deleting Pet with id: ${id}`);
+
+    try {
+      const result = await PetModel.findByIdAndDelete(id);
+      L.info(`Pet ${result} was deleted`);
+      return (result as unknown) as IPetModel;
+    } catch (error) {
+      L.error(`An error ocurred while deleting the pet: ${error}`);
+      throw error;
+    }
+  }
 }
 
 export default new PetManagementService();

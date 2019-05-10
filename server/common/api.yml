@@ -118,6 +118,21 @@ paths:
           description: Return a pet with the specified id
         404:
           description: Pet not found
+  /pet/delete/{id}:
+    delete:
+      tags:
+        - PetManagement
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the pet to remove
+          type: string
+      responses:
+        200:
+          description: Return a pet with removed
+        404:
+          description: Pet not found
 
   /spec:
     get:
