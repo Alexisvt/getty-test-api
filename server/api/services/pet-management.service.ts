@@ -2,9 +2,9 @@ import L from '../../common/logger';
 import { IPetModel, PetModel } from '../models/pet.model';
 
 export class PetManagementService {
-  async create(pet: IPetModel): Promise<any> {
+  async create(pet: IPetModel): Promise<IPetModel> {
     try {
-      const petData: IPetModel = {
+      const petData: Partial<IPetModel> = {
         name: pet.name,
         description: pet.description,
         age: pet.age,
@@ -18,7 +18,7 @@ export class PetManagementService {
     }
   }
 
-  async getPetById(id: string): Promise<any> {
+  async getPetById(id: string): Promise<IPetModel> {
     L.info(`fetch pet with id ${id}`);
 
     try {
@@ -36,9 +36,25 @@ export class PetManagementService {
     try {
       const result = await PetModel.findByIdAndDelete(id);
       L.info(`Pet ${result} was deleted`);
-      return (result as unknown) as IPetModel;
+      return result;
     } catch (error) {
       L.error(`An error ocurred while deleting the pet: ${error}`);
+      throw error;
+    }
+  }
+
+  async updatePet(newPetData: IPetModel): Promise<IPetModel> {
+    L.info(`Update data for Pet id: ${newPetData._id}`);
+    try {
+      const pet = await PetModel.findById(newPetData._id);
+
+      pet.name = newPetData.name;
+      pet.description = newPetData.description;
+      pet.age = newPetData.age;
+
+      return pet.save();
+    } catch (error) {
+      L.error(`An error has ocurred while updating the pet: ${newPetData._id}`);
       throw error;
     }
   }

@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 
 import L from '../../../common/logger';
-import PetManagementService from '../../services/pet-management.service';
+import petManagementService from '../../services/pet-management.service';
 
 export class Controller {
   async create(req: Request, res: Response): Promise<void> {
     try {
-      const result = await PetManagementService.create(req.body);
+      const result = await petManagementService.create(req.body);
       L.info(`Pet was created ${result}`);
       res
         .status(201)
@@ -19,7 +19,7 @@ export class Controller {
 
   async byId(req: Request, res: Response): Promise<void> {
     try {
-      const result = await PetManagementService.getPetById(req.params.id);
+      const result = await petManagementService.getPetById(req.params.id);
       res.status(200).json(result);
     } catch (error) {
       res.status(404).end();
@@ -28,10 +28,19 @@ export class Controller {
 
   async delete(req: Request, res: Response): Promise<void> {
     try {
-      const result = await PetManagementService.deleteById(req.params.id);
+      const result = await petManagementService.deleteById(req.params.id);
       res.status(200).json(result);
     } catch (error) {
       res.status(404).end();
+    }
+  }
+
+  async update(req: Request, res: Response): Promise<void> {
+    try {
+      const result = await petManagementService.updatePet(req.body);
+      res.status(200).json(result);
+    } catch (error) {
+      res.status(500).end();
     }
   }
 }

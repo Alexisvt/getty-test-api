@@ -133,6 +133,22 @@ paths:
           description: Return a pet with removed
         404:
           description: Pet not found
+  /pet/put:
+    put:
+      tags:
+        - PetManagement
+      parameters:
+        - name: PetModel
+          in: body
+          description: a pet object
+          required: true
+          schema:
+            $ref: '#/definitions/PetModel'
+      responses:
+        200:
+          description: Return the updated pet
+        500:
+          description: An error ocurred while processing the update
 
   /spec:
     get:

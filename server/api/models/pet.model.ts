@@ -1,7 +1,6 @@
-import { model, Schema } from 'mongoose';
+import { Document, model, Schema } from 'mongoose';
 
-export interface IPetModel {
-  _id?: string;
+export interface IPetModel extends Document {
   name: string;
   description: string;
   age: number;
@@ -22,4 +21,4 @@ const PetSchema = new Schema({
   },
 });
 
-export const PetModel = model('pet', PetSchema);
+export const PetModel = model<IPetModel>('pet', PetSchema);
