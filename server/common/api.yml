@@ -46,6 +46,26 @@ definitions:
       age:
         type: number
         example: 1
+  PetModelDTO:
+    type: object
+    title: PetModelDTO
+    required:
+      - name
+      - description
+      - age
+      - _id
+    properties:
+      _id:
+        type: string
+      name:
+        type: string
+        example: rufus
+      description:
+        type: string
+        example: big dog
+      age:
+        type: number
+        example: 1
 
 paths:
   /examples:
@@ -138,12 +158,12 @@ paths:
       tags:
         - PetManagement
       parameters:
-        - name: PetModel
+        - name: PetModelDTO
           in: body
           description: a pet object
           required: true
           schema:
-            $ref: '#/definitions/PetModel'
+            $ref: '#/definitions/PetModelDTO'
       responses:
         200:
           description: Return the updated pet
